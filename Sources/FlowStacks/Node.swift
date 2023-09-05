@@ -45,7 +45,7 @@ indirect enum Node<Screen, V: View>: View {
   
   private var bottomSheetBinding: Binding<Bool> {
     switch next {
-    case .route(.presentBottomSheet, _, _, _, _):
+    case .route(.bottomSheet, _, _, _, _):
       return isActiveBinding
     default:
       return .constant(false)

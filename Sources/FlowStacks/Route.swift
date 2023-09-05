@@ -21,7 +21,7 @@ public enum Route<Screen> {
   case cover(Screen, embedInNavigationView: Bool, onDismiss: (() -> Void)? = nil)
   
   
-  case presentBottomSheet(Screen)
+  case bottomSheet(Screen)
   
   /// The root of the stack. The presentation style is irrelevant as it will not be presented.
   /// - Parameter screen: the screen to be shown.
@@ -33,14 +33,14 @@ public enum Route<Screen> {
   public var screen: Screen {
     get {
       switch self {
-      case .push(let screen), .sheet(let screen, _, _), .cover(let screen, _, _), .presentBottomSheet(let screen):
+      case .push(let screen), .sheet(let screen, _, _), .cover(let screen, _, _), .bottomSheet(let screen):
         return screen
       }
     }
     set {
       switch self {
-      case .presentBottomSheet:
-        self = .presentBottomSheet(newValue)
+      case .bottomSheet:
+        self = .bottomSheet(newValue)
       case .push:
         self = .push(newValue)
       case .sheet(_, let embedInNavigationView, let onDismiss):
@@ -57,7 +57,7 @@ public enum Route<Screen> {
   /// Whether the presented screen should be embedded in a `NavigationView`.
   public var embedInNavigationView: Bool {
     switch self {
-    case .push, .presentBottomSheet:
+    case .push, .bottomSheet:
       return false
     case .sheet(_, let embedInNavigationView, _), .cover(_, let embedInNavigationView, _):
       return embedInNavigationView
@@ -69,15 +69,15 @@ public enum Route<Screen> {
     switch self {
     case .push:
       return false
-    case .sheet, .cover, .presentBottomSheet:
+    case .sheet, .cover, .bottomSheet:
       return true
     }
   }
   
   public func map<NewScreen>(_ transform: (Screen) -> NewScreen) -> Route<NewScreen> {
     switch self {
-    case .presentBottomSheet:
-      return .presentBottomSheet(transform(screen))
+    case .bottomSheet:
+      return .bottomSheet(transform(screen))
     case .push:
       return .push(transform(screen))
     case .sheet(_, let embedInNavigationView, let onDismiss):

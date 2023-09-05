@@ -43,6 +43,11 @@ public extension RoutableCollection where Element: RouteProtocol {
   mutating func presentSheet(_ screen: Element.Screen, embedInNavigationView: Bool = false, onDismiss: (() -> Void)? = nil) {
     _append(element: .sheet(screen, embedInNavigationView: embedInNavigationView, onDismiss: onDismiss))
   }
+  
+  mutating func presentBottomSheet(_ screen: Element.Screen) {
+    _append(element: .bottomSheet(screen))
+  }
+
 
   #if os(macOS)
   #else
