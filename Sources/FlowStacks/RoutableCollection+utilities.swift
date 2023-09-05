@@ -7,7 +7,7 @@ public extension RoutableCollection where Element: RouteProtocol {
   var canPush: Bool? {
     for (index, route) in zip(indices, self).reversed() {
       switch route.style {
-      case .push:
+      case .push, .bottomSheet:
         continue
       case .cover(let embedInNavigationView), .sheet(let embedInNavigationView):
         if index > 0 {

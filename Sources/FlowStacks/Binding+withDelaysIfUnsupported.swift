@@ -4,11 +4,11 @@ import SwiftUI
 /// The style with which a route is shown, i.e., if the route is pushed, presented
 /// as a sheet or presented as a full-screen cover.
 public enum RouteStyle: Hashable {
-  case push, sheet(embedInNavigationView: Bool), cover(embedInNavigationView: Bool)
+  case push, sheet(embedInNavigationView: Bool), cover(embedInNavigationView: Bool), bottomSheet
   
   public var isSheet: Bool {
     switch self {
-    case .sheet:
+    case .sheet, .bottomSheet:
       return true
     case .cover, .push:
       return false
@@ -19,7 +19,7 @@ public enum RouteStyle: Hashable {
     switch self {
     case .cover:
       return true
-    case .sheet, .push:
+    case .sheet, .push, .bottomSheet:
       return false
     }
   }
@@ -36,6 +36,8 @@ public extension Route {
       return .sheet(embedInNavigationView: embedInNavigationView)
     case .cover(_, let embedInNavigationView, _):
       return .cover(embedInNavigationView: embedInNavigationView)
+    case .presentBottomSheet:
+      return .bottomSheet
     }
   }
 }
