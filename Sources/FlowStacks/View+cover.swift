@@ -51,4 +51,26 @@ extension View {
       )
     }
   }
+  
+  @ViewBuilder
+  func bottomSheet<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
+    self
+      .bottomSheet(isPresented: isPresented) {
+        BottomSheetRepresnetable(content: content())
+      }
+  }
+}
+
+struct BottomSheetRepresnetable<Content: View>: UIViewControllerRepresentable {
+  let content: Content
+  func makeUIViewController(context: Context) -> some UIViewController {
+    return FPBottomSheetController(
+      hosting: .init(rootView: content),
+      onDismiss: {}
+    )
+  }
+  
+  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    
+  }
 }
