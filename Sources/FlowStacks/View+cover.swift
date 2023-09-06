@@ -54,10 +54,11 @@ extension View {
   
   @ViewBuilder
   func bottomSheet<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
-    self
-      .bottomSheet(isPresented: isPresented) {
+//    self
+//      .bottomSheet(isPresented: isPresented) {
+//        content()
         BottomSheetRepresnetable(content: content())
-      }
+//      }
   }
 }
 
